@@ -18,6 +18,23 @@ export default class HomeScreen extends React.Component {
       <Text style={styles.mainTitle}>Posterific!</Text>
         <Text style={styles.subTitle}>Poster making made easy.</Text>
 
+        <LoginButton
+        onLoginFinished={(error, result) => {
+          if (error) {
+            alert("Login failed with error: " + error.toString());
+          } else if (result.isCancelled) {
+            alert("Login was cancelled");
+          } else {
+            this.props.navigator.push({
+              name: 'PosterList'
+            });
+          }
+        }}
+        onLogoutFinished={() => {
+          this.props.navigator.popToTop();
+        }}
+        />
+        
         <TouchableOpacity
           onPress={
             () => {
@@ -28,22 +45,6 @@ export default class HomeScreen extends React.Component {
           }
         >
           <View style={{ flexDirection: 'row', justifyContent: 'center', width: 180, height: 28, backgroundColor: '#4167ae', borderRadius: 3, margin: 20 }}>
-            <LoginButton
-              onLoginFinished={(error, result) => {
-                if (error) {
-                  alert("Login failed with error: " + error.toString());
-                } else if (result.isCancelled) {
-                  alert("Login was cancelled");
-                } else {
-                  this.props.navigator.push({
-                    name: 'PosterList'
-                  });
-                }
-              }}
-              onLogoutFinished={() => {
-                this.props.navigator.popToTop();
-              }}
-            />
             <Text style={{ margin: 3, color: 'white', fontWeight: 'bold' }}>Get Started</Text>
           </View>
         </TouchableOpacity>
