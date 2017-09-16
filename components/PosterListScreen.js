@@ -13,6 +13,7 @@ export default class PosterListScreen extends React.Component {
     this.state = {
       listMode: false,
       posters: [],
+      user: {}
     };
   }
 
@@ -27,6 +28,16 @@ export default class PosterListScreen extends React.Component {
     }).catch(err => {
       console.log("no posters found: " + err.message);
     });
+
+    //load user data
+    storage.load({
+      key: 'user'
+    }).then(data => {
+      console.log("user found: " + data.user.firstName);
+      tmpThis.setState({ user: data.user });
+    }).catch(err => {
+      console.error("no user found: " + err.message);
+    })
   };
 
   navigateToConfig = (poster) => {
