@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">posterific</string>
     <string name="facebook_app_id">348484392276086</string>
+    <string name="ak_client_token">a1f0824eb850fbc3b3031ed9616eb327</string>
 </resources>
