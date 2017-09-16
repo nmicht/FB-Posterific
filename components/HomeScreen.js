@@ -26,6 +26,7 @@ export default class HomeScreen extends React.Component {
           } else if (result.isCancelled) {
             alert("Login was cancelled");
           } else {
+            let tmpThis = this;
             AccessToken.getCurrentAccessToken().then( (data) => {
               if (data == null) {
                 console.warn("no access token available");
@@ -41,6 +42,13 @@ export default class HomeScreen extends React.Component {
                   if (!error) {
                     let user = new UserModel(result.id, result.first_name, result.picture.data.url);
                     console.log("user: " + user.id, user.firstName, user.profileImageUri);
+                    storage.save({
+                      key: 'user',
+                      rawData: {user: user}
+                    });
+                    tmpThis.props.navigator.push({
+                      name: 'PosterList'
+                    });
                   }
                 };
 
@@ -48,11 +56,7 @@ export default class HomeScreen extends React.Component {
                 let userInfoRequest = new GraphRequest(graphPath, null, requestHandler);
                 new GraphRequestManager().addRequest(userInfoRequest).start();
 
-
               }
-            });
-            this.props.navigator.push({
-              name: 'PosterList'
             });
           }
         }}
