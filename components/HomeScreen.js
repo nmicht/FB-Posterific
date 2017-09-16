@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, View, Image, Text, StyleSheet } from 'react-native';
 import storage from '../Model/PosterificStorage';
-import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { LoginButton, AccessToken, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -31,6 +31,22 @@ export default class HomeScreen extends React.Component {
               } else {
                 console.log("got access token: " + data.accessToken);
                 console.log("permissions: " + data.permissions);
+
+                //Get the profile data
+                let graphPath = '/me?fields=id,first_name,picture{url}';
+                let userInfoRequest = new GraphRequest(graphPath, null, requestHadler);
+                new GraphRequestManager().addRequest(userInfoRequest).start();
+
+                //Handle the request to GraphAPI
+                let requestHadler = function (error, result) {
+                  if (!error) {
+                    console.log("user data: " +
+                                result.id + ', ' +
+                                result.first_name + ', ' +
+                                result.picture.data.url);
+                  }
+                };
+
               }
             });
             this.props.navigator.push({
