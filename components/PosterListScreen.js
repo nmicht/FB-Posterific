@@ -97,6 +97,7 @@ export default class PosterListScreen extends React.Component {
             <Title style={{ fontSize: 15 }}>Your Saved Posters</Title>
           </Body>
           <Right>
+            { this.renderUserIcon() }
             <Button
               transparent
               onPress={() => {
@@ -246,4 +247,15 @@ export default class PosterListScreen extends React.Component {
     )
   }
 
+  renderUserIcon = () => {
+    if (this.state.user.profileImageUri === undefined) {
+      return (
+        <Icon name={'md-person'} />
+      )
+    } else {
+      return (
+        <Thumbnail source={{ uri: this.state.user.profileImageUri }} />
+      )
+    }
+  }
 }
