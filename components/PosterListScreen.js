@@ -26,7 +26,7 @@ export default class PosterListScreen extends React.Component {
     }).then(posters => {
       tmpThis.setState({ posters: posters });
     }).catch(err => {
-      console.log("no posters found: " + err.message);
+      console.warn("no posters found: " + err.message);
     });
 
     //load user data
@@ -36,7 +36,7 @@ export default class PosterListScreen extends React.Component {
       console.log("user found: " + data.user.firstName);
       tmpThis.setState({ user: data.user });
     }).catch(err => {
-      console.error("no user found: " + err.message);
+      console.warn("no user found: " + err.message);
     })
   };
 
